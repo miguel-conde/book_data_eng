@@ -1,0 +1,27 @@
+project:
+  type: book
+
+book:
+  title: "Introducción a la Ingeniería de Datos en Local"
+  author: "Miguel Conde"
+  date: "2/24/2025"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - c1_vision_general.qmd
+    - c2_fundamentos_bbdd.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+
+

@@ -1,0 +1,139 @@
+# Introducción y visión general
+
+Este capítulo tiene como objetivo **dar una visión global de la ingeniería de datos**, sus componentes clave y cómo encajan dentro de un **flujo de trabajo típico**.
+
+## **¿Qué es la Ingeniería de Datos?**
+
+La **ingeniería de datos** es la disciplina encargada de diseñar, construir y mantener la infraestructura y los sistemas necesarios para **almacenar, procesar y mover datos** en grandes volúmenes y de manera eficiente.
+
+A diferencia del **data science**, que se enfoca en **análisis y modelos predictivos**, la ingeniería de datos se preocupa por la **fiabilidad, escalabilidad y eficiencia del procesamiento de datos**.
+
+💡 **Ejemplo:**
+
+-   Un modelo de Machine Learning necesita datos limpios y estructurados. La ingeniería de datos se encarga de extraerlos, transformarlos y ponerlos en un formato óptimo.
+
+-   En una empresa de streaming (como Netflix o Spotify), la ingeniería de datos gestiona en tiempo real la información de los usuarios, recomendaciones y reproducciones.
+
+## **Diferencias entre Data Science y Data Engineering**
+
+| **Aspecto** | **Data Science** | **Data Engineering** |
+|----|----|----|
+| **Objetivo** | Análisis, modelos predictivos, insights | Movimiento, almacenamiento y transformación de datos |
+| **Enfoque** | Modelos estadísticos, ML, IA | Arquitectura de datos, optimización de pipelines |
+| **Herramientas** | Python (Pandas, Scikit-Learn, TensorFlow), R | SQL, Apache Kafka, Spark, Airflow, Docker |
+| **Tipo de Datos** | Limpios y estructurados | Datos crudos, en múltiples formatos |
+| **Ejemplo** | Predecir ventas usando ML | Crear un pipeline que recolecta datos de ventas en tiempo real |
+
+🔥 **Conclusión:** Sin una buena infraestructura de datos, un equipo de Data Science no puede trabajar de manera eficiente. La ingeniería de datos es la base.
+
+## **Componentes Clave del Stack de Ingeniería de Datos**
+
+El ecosistema de herramientas en ingeniería de datos es extenso, pero los componentes más importantes son:
+
+### **1. Bases de Datos (PostgreSQL): Almacenamiento Estructurado**
+
+-   Bases de datos **relacionales** (SQL) vs **NoSQL**.
+
+-   PostgreSQL es una opción **robusta y open-source** usada en producción.
+
+-   Indexación y optimización para grandes volúmenes de datos.
+
+-   Alternativas: MySQL, MariaDB, MongoDB (NoSQL).
+
+💡 **Ejemplo:** Un sistema de ventas online almacena datos de clientes y pedidos en una base de datos PostgreSQL.
+
+### **2. Contenedores (Docker, Kubernetes): Entornos Reproducibles**
+
+-   **Docker:** permite encapsular aplicaciones y dependencias en contenedores.
+
+-   **Docker Compose:** gestionar múltiples contenedores (Ejemplo: una BD + un servicio de API).
+
+-   **Kubernetes:** orquesta y escala múltiples contenedores.
+
+💡 **Ejemplo:** Un pipeline ETL se ejecuta en un contenedor con PostgreSQL y Python sin afectar otros entornos.
+
+### **3. Streaming de Datos (Kafka): Procesamiento en Tiempo Real**
+
+-   Apache Kafka permite transmitir datos en **tiempo real** en sistemas distribuidos.
+
+-   Alternativa a los **batch jobs** (procesamiento por lotes).
+
+-   Se usa en recomendaciones en streaming, IoT, monitoreo financiero, etc.
+
+💡 **Ejemplo:** Un e-commerce usa Kafka para analizar qué productos ve un usuario en tiempo real y ofrecerle descuentos personalizados.
+
+### **4. ETL y Orquestación (Airflow): Automatización de Pipelines**
+
+-   **ETL (Extract, Transform, Load):** extraer datos de diversas fuentes, limpiarlos y cargarlos en un destino.
+
+-   **Apache Airflow** permite programar y orquestar flujos de datos complejos con DAGs (Grafos Acíclicos Dirigidos).
+
+-   Alternativas: Prefect, Luigi.
+
+💡 **Ejemplo:** Un pipeline que diariamente extrae datos de ventas, los limpia y genera reportes.
+
+### **5. Procesamiento Distribuido (Spark, Dask, Polars): Cuándo y Por Qué Usarlo**
+
+-   **Apache Spark:** procesamiento distribuido para Big Data.
+
+-   **Dask:** alternativa ligera a Spark, permite procesamiento paralelo en local.
+
+-   **Polars:** optimización para DataFrames más rápida que Pandas.
+
+💡 **Ejemplo:** Analizar terabytes de logs de servidores con Spark en lugar de Pandas.
+
+### **6. Data Lakes y Almacenamiento de Datos**
+
+-   **Data Warehouse vs Data Lake:**
+
+    -   **Data Warehouse:** datos estructurados y optimizados para consultas rápidas (ej: Snowflake, Redshift).
+
+    -   **Data Lake:** datos en crudo, en diversos formatos (ej: Parquet, Avro, JSON).
+
+-   **MinIO:** alternativa local a AWS S3 para almacenar archivos en un Data Lake.
+
+💡 **Ejemplo:** Una empresa guarda imágenes y logs en un Data Lake en MinIO.
+
+### **7. APIs y Exposición de Datos**
+
+-   **FastAPI y Flask:** creación de APIs para exponer datos procesados.
+
+-   **GraphQL:** alternativa a REST para consultas eficientes.
+
+-   APIs permiten integrar datos en aplicaciones web, dashboards, apps móviles, etc.
+
+💡 **Ejemplo:** Un sistema de recomendación expone predicciones vía API a una app móvil.
+
+## **Cómo Se Combinan Todas Estas Herramientas en un Flujo de Datos Real**
+
+Imagina un sistema de análisis de logs en una empresa:
+
+1.  **Kafka** recibe logs en tiempo real de servidores.
+
+2.  **Airflow** orquesta tareas para transformar los logs en información útil.
+
+3.  **Spark/Dask** procesa los datos si son muy grandes.
+
+4.  **PostgreSQL o un Data Lake (MinIO)** almacena los datos procesados.
+
+5.  **FastAPI** expone los datos en una API para dashboards o reportes.
+
+6.  **Docker y Kubernetes** aseguran que todo sea escalable y reproducible.
+
+🔗 **Ejemplo real:** Un sistema de fraude financiero que detecta transacciones sospechosas en tiempo real.
+
+## **Casos de Uso en la Industria**
+
+🔹 **E-commerce:** procesamiento de eventos en tiempo real (clicks, compras).\
+🔹 **Banca/Finanzas:** detección de fraudes con pipelines de datos en streaming.\
+🔹 **Streaming (Netflix, Spotify):** recomendaciones basadas en actividad del usuario.\
+🔹 **Logística:** optimización de rutas en base a datos históricos y en tiempo real.\
+🔹 **IoT (Internet of Things):** ingestión y análisis de datos de sensores.
+
+## **Conclusión**
+
+✔️ La ingeniería de datos es clave para mover y transformar datos a gran escala.\
+✔️ Herramientas como **Kafka, Airflow, Spark y Docker** permiten crear sistemas eficientes.\
+✔️ **Sin una buena infraestructura de datos, el Data Science no puede funcionar bien.**
+
+💬 **¿Tienes alguna duda sobre este capítulo antes de seguir con las bases de datos?** 🚀

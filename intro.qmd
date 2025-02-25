@@ -1,0 +1,115 @@
+# Introduction
+
+This is a book created from markdown and executable code.
+
+See @knuth84 for additional discussion of literate programming.
+
+## **Mini Curso: Introducción a la Ingeniería de Datos en Local**
+
+### **Capítulo 0: Introducción y visión general**
+
+-   ¿Qué es la ingeniería de datos?
+
+-   Diferencias entre data science y data engineering
+
+-   Componentes clave del stack de ingeniería de datos
+
+-   **Bases de datos (PostgreSQL):** almacenamiento estructurado
+
+-   **Contenedores (Docker, Kubernetes):** entornos reproducibles
+
+-   **Streaming de datos (Kafka):** procesamiento en tiempo real
+
+-   **ETL y orquestación (Airflow):** automatización de pipelines
+
+-   **Procesamiento distribuido (Spark, Dask, Polars):** cuándo y por qué usarlo
+
+-   **Data Lakes y almacenamiento de datos**
+
+-   **APIs y exposición de datos**
+
+-   Cómo se combinan todas estas herramientas en un flujo de datos real
+
+-   Casos de uso en la industria
+
+### **Capítulo 1: Fundamentos de Bases de Datos para Data Scientists**
+
+-   Introducción a bases de datos relacionales vs NoSQL
+
+-   Fundamentos de SQL (PostgreSQL)
+
+-   Diseño de esquemas de bases de datos
+
+-   Indexación y optimización de consultas
+
+-   **\[NUEVO\] Almacenamiento eficiente de datos en formatos Parquet y Avro**
+
+-   **\[NUEVO\] Data Lakes en local con MinIO (conceptual y opcional práctico)**
+
+-   **\[NUEVO\] Introducción teórica a Data Warehouses (Snowflake, Redshift, BigQuery) y comparación con PostgreSQL**
+
+### **Capítulo 2: Contenedores y Orquestación: Docker y Kubernetes**
+
+-   Introducción a Docker
+
+-   Creación y gestión de contenedores
+
+-   Docker Compose para gestionar múltiples servicios
+
+-   Introducción a Kubernetes (conceptos básicos, Minikube en local)
+
+-   **\[NUEVO\] Infraestructura reproducible con Docker Compose avanzado**
+
+### **Capítulo 3: Procesamiento de Datos en Tiempo Real con Kafka**
+
+-   Conceptos clave de Apache Kafka
+
+-   Instalación y configuración en local
+
+-   Producción y consumo de datos con Python
+
+-   Casos de uso típicos en ingeniería de datos
+
+### **Capítulo 4: Pipelines de Datos y ETL con Apache Airflow**
+
+-   Introducción a Apache Airflow
+
+-   Instalación y configuración
+
+-   Creación de DAGs para ETL en local
+
+-   Monitorización de flujos de trabajo
+
+### **Capítulo 5: APIs y Exposición de Datos**
+
+-   **\[NUEVO\] Creación de APIs con FastAPI o Flask para exponer datos procesados**
+
+-   **\[NUEVO\] Introducción a GraphQL (conceptual, sin implementación en local)**
+
+-   **\[NUEVO\] Cómo consumir datos desde herramientas externas (Power BI, Dash, etc.)**
+
+### **Capítulo Extra: Procesamiento Distribuido con Spark, Dask y Polars**
+
+-   Introducción al procesamiento distribuido
+
+-   **Dask en local:** alternativa ligera a Spark
+
+-   **Apache Spark en local:** configuración con PySpark
+
+-   **Polars:** optimización para DataFrames más rápida que Pandas
+
+-   **Comparativa y casos de uso**
+
+### **Capítulo 6: Proyecto Integrador**
+
+-   Construcción de un pipeline de datos completo en local
+
+-   Integración de PostgreSQL, Kafka, Airflow y Docker
+
+-   **\[NUEVO\] Procesamiento con Dask o Spark en el pipeline**
+
+-   Exposición de datos mediante API
+
+-   Análisis de datos resultantes con Python/R
+
+-   **\[NUEVO\] Qué cambiaría si migramos nuestro flujo de datos local a Snowflake u otro Data Warehouse en la nube**

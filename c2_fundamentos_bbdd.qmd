@@ -1,0 +1,217 @@
+# Fundamentos de Bases de Datos para Data Scientists
+
+## **Introducción a Bases de Datos Relacionales vs NoSQL**
+
+Las bases de datos son la **columna vertebral** de cualquier sistema de datos. En este capítulo, aprenderemos los conceptos clave de bases de datos relacionales, SQL y técnicas de optimización. Además, exploraremos **formatos eficientes de almacenamiento**, introduciremos **Data Lakes con MinIO** y veremos **una comparación teórica entre Data Warehouses y PostgreSQL**.
+
+Las bases de datos se dividen en dos grandes categorías:
+
+### **Bases de datos relacionales (SQL)**
+
+-   Almacenan datos en **tablas con filas y columnas**.
+
+-   Soportan **lenguaje SQL** para realizar consultas estructuradas.
+
+-   **Ejemplos:** PostgreSQL, MySQL, MariaDB, SQL Server.
+
+-   **Casos de uso:**
+
+    -   Sistemas transaccionales (ventas, facturación, clientes).
+
+    -   Análisis de datos estructurados.
+
+### **Bases de datos NoSQL**
+
+-   No siguen un esquema rígido de tablas y pueden almacenar datos en varios formatos:
+
+    -   **Documentos:** MongoDB (JSON-like).
+
+    -   **Claves-valor:** Redis.
+
+    -   **Columnas:** Apache Cassandra.
+
+    -   **Grafos:** Neo4j.
+
+-   **Casos de uso:**
+
+    -   Aplicaciones en tiempo real con alta escalabilidad.
+
+    -   Almacenamiento flexible de datos no estructurados.
+
+💡 **Ejemplo:**\
+Un e-commerce puede usar **PostgreSQL** para almacenar pedidos y clientes (estructurado) y **MongoDB** para guardar datos de navegación del usuario (no estructurado).
+
+## **Fundamentos de SQL (PostgreSQL)**
+
+PostgreSQL es un **motor de base de datos relacional open-source** con características avanzadas, como indexación eficiente y soporte para JSON.
+
+### **Conceptos clave de SQL:**
+
+-   **SELECT:** para consultar datos.
+
+-   **JOINs:** combinaciones de datos de varias tablas.
+
+-   **GROUP BY & HAVING:** agregaciones sobre conjuntos de datos.
+
+-   **Índices:** optimización de búsqueda de datos.
+
+-   **Vistas y Materialized Views:** consultas reutilizables.
+
+💡 **Ejemplo de consulta en PostgreSQL:**
+
+```sql
+SELECT customer_name, SUM(amount) AS total_spent 
+FROM orders 
+GROUP BY customer_name 
+HAVING SUM(amount) > 500;
+```
+
+📌 **Explicación:** Agrupa los pedidos por cliente y devuelve aquellos con un gasto total superior a 500.
+
+## **Diseño de Esquemas de Bases de Datos**
+
+El diseño de esquemas afecta la **eficiencia y escalabilidad** de una base de datos.
+
+### **Normalización vs Denormalización**
+
+-   **Normalización:**
+
+    -   Minimiza redundancia y mejora consistencia.
+
+    -   Divide datos en múltiples tablas con relaciones.
+
+    -   **Ejemplo:** Separar clientes, pedidos y productos en tablas distintas.
+
+-   **Denormalización:**
+
+    -   Reduce la cantidad de `JOINs` en consultas frecuentes.
+
+    -   Aumenta redundancia pero mejora performance en ciertos casos.
+
+💡 **Ejemplo de esquema normalizado:**
+
+```sql
+CREATE TABLE customers (
+    id SERIAL PRIMARY KEY,     
+    name TEXT,     
+    email TEXT UNIQUE 
+);  
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY, 
+    customer_id INT REFERENCES customers(id),
+    amount DECIMAL,
+    order_date TIMESTAMP 
+);
+```
+
+📌 **Explicación:** En lugar de almacenar información repetida del cliente en cada pedido, creamos una relación con `customer_id`.
+
+## **Indexación y Optimización de Consultas**
+
+Las bases de datos pueden volverse **lentas** a medida que crecen. Para evitar esto, se usan **índices y optimización de consultas**.
+
+### **Tipos de índices en PostgreSQL**
+
+1.  **Índices B-Tree (Por defecto)** → Útiles para `WHERE` en valores únicos o rango.
+
+2.  **Índices Hash** → Para búsquedas exactas.
+
+3.  **Índices GIN** → Para búsquedas en JSON o texto completo.
+
+4.  **Índices BRIN** → Optimización en grandes volúmenes de datos ordenados.
+
+💡 **Ejemplo de creación de índice:**
+
+
+```sql
+CREATE INDEX idx_customer_email ON customers(email);`
+```
+
+📌 **Explicación:** Agrega un índice sobre el email del cliente para acelerar búsquedas.
+
+🔍 **Uso de `EXPLAIN ANALYZE` para analizar rendimiento:**
+
+```sql
+EXPLAIN ANALYZE  SELECT * FROM orders WHERE amount > 100;
+```
+
+📌 **Explicación:** Muestra el plan de ejecución de la consulta y su costo en términos de tiempo y recursos.
+
+## **Almacenamiento Eficiente de Datos en Formatos Parquet y Avro**
+
+### **Por qué no siempre usar CSV o JSON**
+
+-   **CSV:** ocupa mucho espacio y es lento para grandes volúmenes.
+
+-   **JSON:** flexible pero pesado y difícil de optimizar.
+
+### **Formatos optimizados**
+
+1.  **Parquet:**
+
+    -   Formato columnar (excelente para consultas analíticas).
+
+    -   Soporta compresión eficiente.
+
+    -   Se usa en Apache Spark, Snowflake, AWS Athena.
+
+2.  **Avro:**
+
+    -   Formato binario, ideal para transmisión de datos.
+
+    -   Útil en Kafka y streaming de eventos.
+
+💡 **Ejemplo de conversión en Pandas:**
+
+
+``` python
+import pandas as pd  
+
+df = pd.read_csv("data.csv") 
+df.to_parquet("data.parquet", engine="pyarrow", compression="snappy")
+```
+
+📌 **Explicación:** Convierte un CSV en un Parquet optimizado con compresión **Snappy**.
+
+## **Data Lakes en Local con MinIO (Conceptual y Opcional Práctico)**
+
+### **¿Qué es un Data Lake?**
+
+Un **Data Lake** es un repositorio que almacena datos en **crudo** en múltiples formatos.
+
+**Diferencias entre Data Warehouse y Data Lake:**
+
+| **Característica** | **Data Warehouse** | **Data Lake** |
+|------------------------|------------------------|------------------------|
+| Datos | Estructurados | Cualquier formato (JSON, Parquet, imágenes, logs) |
+| Procesamiento | SQL, optimizado para consultas | Flexible, permite ML, Big Data |
+| Ejemplo | Snowflake, Redshift | AWS S3, MinIO |
+
+### **MinIO: Un Data Lake en Local**
+
+MinIO es un sistema de almacenamiento **compatible con S3**, pero ejecutable en local.
+
+💡 **Ejemplo:**\
+Usar MinIO para almacenar archivos Parquet en un Data Lake local y procesarlos con Spark o Dask.
+
+## **Introducción Teórica a Data Warehouses (Snowflake, Redshift, BigQuery) y Comparación con PostgreSQL**
+
+📌 **Diferencias Clave**
+
+| **Aspecto**   | **PostgreSQL (en local)** | **Snowflake (Cloud DW)**     |
+|---------------|---------------------------|------------------------------|
+| Escalabilidad | Limitada                  | Alta (autoescalado)          |
+| Coste         | Gratis en local           | Pago por uso                 |
+| Rendimiento   | Bueno en datos pequeños   | Optimizado para TBs de datos |
+| Formato       | SQL tradicional           | SQL optimizado para DW       |
+
+💡 **Ejemplo práctico:**\
+Si una empresa tiene **10 GB de datos**, PostgreSQL es suficiente. Pero si tiene **10 TB y consultas analíticas pesadas**, necesita un **Data Warehouse como Snowflake**.
+
+## **Conclusión del Capítulo**
+
+✔️ PostgreSQL es una base de datos **potente y escalable en local**.\
+✔️ Formatos como **Parquet y Avro** mejoran el almacenamiento.\
+✔️ **Data Lakes (MinIO)** son útiles para almacenar datos en bruto.\
+✔️ **Data Warehouses como Snowflake** son ideales para consultas analíticas en grandes volúmenes.

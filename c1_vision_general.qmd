@@ -17,7 +17,7 @@ A diferencia del **data science**, que se enfoca en **análisis y modelos predic
 ## **Diferencias entre Data Science y Data Engineering**
 
 | **Aspecto** | **Data Science** | **Data Engineering** |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Objetivo** | Análisis, modelos predictivos, insights | Movimiento, almacenamiento y transformación de datos |
 | **Enfoque** | Modelos estadísticos, ML, IA | Arquitectura de datos, optimización de pipelines |
 | **Herramientas** | Python (Pandas, Scikit-Learn, TensorFlow), R | SQL, Apache Kafka, Spark, Airflow, Docker |

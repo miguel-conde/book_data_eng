@@ -10,6 +10,12 @@ book:
     - intro.qmd
     - c1_vision_general.qmd
     - c2_fundamentos_bbdd.qmd
+    - c3_contenedores_orquestacion.qmd
+    - c4_tiempo_real_kafka.qmd
+    - c5_pipelines_etl_airflow.qmd
+    - c6_apis_exposicion_datos.qmd
+    - c7_procesamiento_distribuido.qmd
+    - c8_proyecto_integrador.qmd
     - summary.qmd
     - references.qmd
 

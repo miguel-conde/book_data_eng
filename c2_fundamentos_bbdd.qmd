@@ -1,12 +1,12 @@
 # Fundamentos de Bases de Datos para Data Scientists
 
-## **Introducción a Bases de Datos Relacionales vs NoSQL**
+## Introducción a Bases de Datos Relacionales vs NoSQL
 
 Las bases de datos son la **columna vertebral** de cualquier sistema de datos. En este capítulo, aprenderemos los conceptos clave de bases de datos relacionales, SQL y técnicas de optimización. Además, exploraremos **formatos eficientes de almacenamiento**, introduciremos **Data Lakes con MinIO** y veremos **una comparación teórica entre Data Warehouses y PostgreSQL**.
 
 Las bases de datos se dividen en dos grandes categorías:
 
-### **Bases de datos relacionales (SQL)**
+**Bases de datos relacionales (SQL)**
 
 -   Almacenan datos en **tablas con filas y columnas**.
 
@@ -20,7 +20,7 @@ Las bases de datos se dividen en dos grandes categorías:
 
     -   Análisis de datos estructurados.
 
-### **Bases de datos NoSQL**
+**Bases de datos NoSQL**
 
 -   No siguen un esquema rígido de tablas y pueden almacenar datos en varios formatos:
 
@@ -41,11 +41,11 @@ Las bases de datos se dividen en dos grandes categorías:
 💡 **Ejemplo:**\
 Un e-commerce puede usar **PostgreSQL** para almacenar pedidos y clientes (estructurado) y **MongoDB** para guardar datos de navegación del usuario (no estructurado).
 
-## **Fundamentos de SQL (PostgreSQL)**
+## Fundamentos de SQL (PostgreSQL)
 
 PostgreSQL es un **motor de base de datos relacional open-source** con características avanzadas, como indexación eficiente y soporte para JSON.
 
-### **Conceptos clave de SQL:**
+**Conceptos clave de SQL:**
 
 -   **SELECT:** para consultar datos.
 
@@ -59,7 +59,7 @@ PostgreSQL es un **motor de base de datos relacional open-source** con caracter�
 
 💡 **Ejemplo de consulta en PostgreSQL:**
 
-```sql
+``` sql
 SELECT customer_name, SUM(amount) AS total_spent 
 FROM orders 
 GROUP BY customer_name 
@@ -68,11 +68,11 @@ HAVING SUM(amount) > 500;
 
 📌 **Explicación:** Agrupa los pedidos por cliente y devuelve aquellos con un gasto total superior a 500.
 
-## **Diseño de Esquemas de Bases de Datos**
+## Diseño de Esquemas de Bases de Datos
 
 El diseño de esquemas afecta la **eficiencia y escalabilidad** de una base de datos.
 
-### **Normalización vs Denormalización**
+**Normalización vs Denormalización**
 
 -   **Normalización:**
 
@@ -90,7 +90,7 @@ El diseño de esquemas afecta la **eficiencia y escalabilidad** de una base de d
 
 💡 **Ejemplo de esquema normalizado:**
 
-```sql
+``` sql
 CREATE TABLE customers (
     id SERIAL PRIMARY KEY,     
     name TEXT,     
@@ -107,11 +107,11 @@ CREATE TABLE orders (
 
 📌 **Explicación:** En lugar de almacenar información repetida del cliente en cada pedido, creamos una relación con `customer_id`.
 
-## **Indexación y Optimización de Consultas**
+## Indexación y Optimización de Consultas
 
 Las bases de datos pueden volverse **lentas** a medida que crecen. Para evitar esto, se usan **índices y optimización de consultas**.
 
-### **Tipos de índices en PostgreSQL**
+**Tipos de índices en PostgreSQL**
 
 1.  **Índices B-Tree (Por defecto)** → Útiles para `WHERE` en valores únicos o rango.
 
@@ -123,8 +123,7 @@ Las bases de datos pueden volverse **lentas** a medida que crecen. Para evitar e
 
 💡 **Ejemplo de creación de índice:**
 
-
-```sql
+``` sql
 CREATE INDEX idx_customer_email ON customers(email);`
 ```
 
@@ -132,21 +131,21 @@ CREATE INDEX idx_customer_email ON customers(email);`
 
 🔍 **Uso de `EXPLAIN ANALYZE` para analizar rendimiento:**
 
-```sql
+``` sql
 EXPLAIN ANALYZE  SELECT * FROM orders WHERE amount > 100;
 ```
 
 📌 **Explicación:** Muestra el plan de ejecución de la consulta y su costo en términos de tiempo y recursos.
 
-## **Almacenamiento Eficiente de Datos en Formatos Parquet y Avro**
+## Almacenamiento Eficiente de Datos en Formatos Parquet y Avro
 
-### **Por qué no siempre usar CSV o JSON**
+**Por qué no siempre usar CSV o JSON**
 
 -   **CSV:** ocupa mucho espacio y es lento para grandes volúmenes.
 
 -   **JSON:** flexible pero pesado y difícil de optimizar.
 
-### **Formatos optimizados**
+**Formatos optimizados**
 
 1.  **Parquet:**
 
@@ -164,7 +163,6 @@ EXPLAIN ANALYZE  SELECT * FROM orders WHERE amount > 100;
 
 💡 **Ejemplo de conversión en Pandas:**
 
-
 ``` python
 import pandas as pd  
 
@@ -174,9 +172,9 @@ df.to_parquet("data.parquet", engine="pyarrow", compression="snappy")
 
 📌 **Explicación:** Convierte un CSV en un Parquet optimizado con compresión **Snappy**.
 
-## **Data Lakes en Local con MinIO (Conceptual y Opcional Práctico)**
+## Data Lakes en Local con MinIO (Conceptual y Opcional Práctico)
 
-### **¿Qué es un Data Lake?**
+**¿Qué es un Data Lake?**
 
 Un **Data Lake** es un repositorio que almacena datos en **crudo** en múltiples formatos.
 
@@ -188,14 +186,14 @@ Un **Data Lake** es un repositorio que almacena datos en **crudo** en múltiples
 | Procesamiento | SQL, optimizado para consultas | Flexible, permite ML, Big Data |
 | Ejemplo | Snowflake, Redshift | AWS S3, MinIO |
 
-### **MinIO: Un Data Lake en Local**
+**MinIO: Un Data Lake en Local**
 
 MinIO es un sistema de almacenamiento **compatible con S3**, pero ejecutable en local.
 
 💡 **Ejemplo:**\
 Usar MinIO para almacenar archivos Parquet en un Data Lake local y procesarlos con Spark o Dask.
 
-## **Introducción Teórica a Data Warehouses (Snowflake, Redshift, BigQuery) y Comparación con PostgreSQL**
+## Introducción Teórica a Data Warehouses (Snowflake, Redshift, BigQuery) y Comparación con PostgreSQL
 
 📌 **Diferencias Clave**
 
@@ -209,9 +207,677 @@ Usar MinIO para almacenar archivos Parquet en un Data Lake local y procesarlos c
 💡 **Ejemplo práctico:**\
 Si una empresa tiene **10 GB de datos**, PostgreSQL es suficiente. Pero si tiene **10 TB y consultas analíticas pesadas**, necesita un **Data Warehouse como Snowflake**.
 
-## **Conclusión del Capítulo**
+## Conclusión del Capítulo
 
 ✔️ PostgreSQL es una base de datos **potente y escalable en local**.\
 ✔️ Formatos como **Parquet y Avro** mejoran el almacenamiento.\
 ✔️ **Data Lakes (MinIO)** son útiles para almacenar datos en bruto.\
 ✔️ **Data Warehouses como Snowflake** son ideales para consultas analíticas en grandes volúmenes.
+
+## Anexo 1: Instalación de PostgreSQL en Linux y Primeros Pasos
+
+### Instalacion
+
+#### Instalación de PostgreSQL en Linux
+
+**En Ubuntu/Debian:**
+
+Ejecuta los siguientes comandos en la terminal:
+
+``` bash
+sudo apt update sudo apt install postgresql postgresql-contrib
+```
+
+📌 **Explicación:**
+
+-   `postgresql`: instala el servidor de base de datos.
+
+-   `postgresql-contrib`: incluye herramientas adicionales.
+
+**En Fedora:**
+
+``` bash
+sudo dnf install postgresql-server postgresql-contrib
+```
+
+**En Arch Linux:**
+
+``` bash
+sudo pacman -S postgresql
+```
+
+#### Iniciar el servicio PostgreSQL
+
+Después de la instalación, el servicio se inicia automáticamente. Para verificarlo:
+
+``` bash
+sudo systemctl status postgresql
+```
+
+Si no está en ejecución, inicia el servicio manualmente:
+
+``` bash
+sudo systemctl start postgresql
+```
+
+Para asegurarte de que se inicie en cada reinicio del sistema:
+
+``` bash
+sudo systemctl enable postgresql
+```
+
+#### Acceder a PostgreSQL y Crear una Base de Datos
+
+**Acceder como usuario `postgres` (administrador por defecto)**
+
+PostgreSQL crea automáticamente un usuario del sistema llamado `postgres`. Para acceder al entorno interactivo de PostgreSQL, usa:
+
+``` bash
+sudo -i -u postgres psql
+```
+
+Esto abrirá el shell interactivo `psql`.
+
+**Crear una nueva base de datos**
+
+Dentro de `psql`, ejecuta:
+
+``` sql
+CREATE DATABASE mi_base_de_datos;
+```
+
+**Crear un nuevo usuario con permisos**
+
+``` sql
+CREATE USER mi_usuario WITH PASSWORD 'mi_contraseña'; GRANT ALL PRIVILEGES ON DATABASE mi_base_de_datos TO mi_usuario;
+```
+
+#### Conectar y Usar PostgreSQL desde la Terminal (`psql`)
+
+**Conectar a una base de datos**
+
+Desde `psql`, usa:
+
+``` bash
+\c mi_base_de_datos
+```
+
+Si estás en la terminal normal de Linux:
+
+``` bash
+psql -U mi_usuario -d mi_base_de_datos
+```
+
+**Mostrar tablas disponibles**
+
+``` sql
+\dt
+```
+
+**Ejecutar consultas básicas**
+
+``` sql
+SELECT * FROM mi_tabla;
+```
+
+**Salir del shell `psql`**
+
+``` bash
+\q
+```
+
+#### Conectar PostgreSQL desde Python con `psycopg2`
+
+Si quieres interactuar con PostgreSQL desde Python, instala `psycopg2`:
+
+``` bash
+pip install psycopg2-binary
+```
+
+Ejemplo de conexión en Python:
+
+``` python
+import psycopg2  
+
+conn = psycopg2.connect(     
+    dbname="mi_base_de_datos",     
+    user="mi_usuario",     
+    password="mi_contraseña",     
+    host="localhost",     
+    port="5432" ) 
+    
+cursor = conn.cursor() 
+cursor.execute("SELECT version();") 
+
+print(cursor.fetchone())  
+
+cursor.close() 
+conn.close()
+```
+
+📌 **Explicación:**
+
+-   `connect()` establece la conexión.
+
+-   `execute()` ejecuta consultas SQL.
+
+#### Conectar PostgreSQL desde un Cliente Gráfico
+
+Si prefieres una interfaz gráfica, puedes usar **pgAdmin**:
+
+``` bash
+sudo apt install pgadmin4
+```
+
+Después, accede desde el navegador en `http://localhost/pgadmin4`.
+
+#### Conclusión
+
+✔️ Instalaste PostgreSQL en Linux.\
+✔️ Creaste una base de datos y un usuario.\
+✔️ Aprendiste a conectarte con `psql`, Python (`psycopg2`) y pgAdmin.
+
+### Uso
+
+#### Opciones de Librerías para Interactuar con PostgreSQL
+
+| **Librería** | **Uso Principal** | **Ventajas** |
+|------------------------|------------------------|------------------------|
+| `psycopg2` | Interfaz estándar para consultas SQL | Rápida y estable, buena integración con Pandas |
+| `sqlalchemy` | ORM y gestión avanzada de conexiones | Ideal para grandes proyectos con abstracción de SQL |
+| `pg8000` | Cliente nativo en Python (100% Python) | No requiere compilación, útil en entornos restringidos |
+| `asyncpg` | Cliente asíncrono para PostgreSQL | Muy rápido, ideal para aplicaciones con alta concurrencia |
+
+**Ejemplo de conexión con SQLAlchemy** (en lugar de `psycopg2`):
+
+``` python
+from sqlalchemy import create_engine 
+import pandas as pd  
+
+engine = create_engine("postgresql://mi_usuario:mi_contraseña@localhost:5432/mi_base_de_datos")  
+
+df = pd.read_sql("SELECT * FROM mi_tabla", engine) 
+
+print(df.head())
+```
+
+📌 **Ventaja:** Integra SQL con Pandas sin escribir consultas explícitas.
+
+#### Trabajar con Tablas en Formato DataFrame
+
+Si tienes una tabla en PostgreSQL y quieres convertirla en un **DataFrame de Pandas**:
+
+**Cargar datos desde PostgreSQL a Pandas**
+
+``` python
+import psycopg2 
+import pandas as pd  
+
+conn = psycopg2.connect(     
+    dbname="mi_base_de_datos",     
+    user="mi_usuario",     
+    password="mi_contraseña",     
+    host="localhost",     
+    port="5432" )  
+    
+query = "SELECT * FROM mi_tabla" 
+df = pd.read_sql(query, conn) 
+
+conn.close()  
+
+print(df.head())
+```
+
+📌 **Ventaja:** Fácil manipulación con Pandas después de extraer los datos.
+
+#### Manejar Tablas Grandes: Alternativas a Pandas
+
+Cuando las tablas son **grandes (millones de filas)**, Pandas puede volverse lento. Algunas soluciones:
+
+**Usar `chunksize` en Pandas para leer datos en fragmentos**
+
+``` python
+for chunk in pd.read_sql(query, conn, chunksize=100000):     
+    print(chunk.shape)
+```
+
+📌 **Ventaja:** Procesa datos por partes en lugar de cargar todo en memoria.
+
+#### `PyArrow` para Datos en Memoria y PostgreSQL
+
+`PyArrow` es una librería optimizada para manipular grandes volúmenes de datos en memoria.\
+Podemos usarla para leer datos más rápido desde PostgreSQL:
+
+**Convertir una tabla grande en Apache Arrow:**
+
+``` python
+import pyarrow.parquet as pq 
+import pyarrow as pa  
+
+table = pa.Table.from_pandas(df) 
+
+pq.write_table(table, "datos.parquet")
+```
+
+📌 **Ventaja:**\
+✅ **Parquet** es más rápido que CSV.\
+✅ Permite **lectura parcial de datos** (columnar).\
+✅ Se integra con Spark y Dask.
+
+#### `Dask` para DataFrames Grandes en PostgreSQL
+
+Dask permite manejar grandes volúmenes de datos como si fueran DataFrames de Pandas, pero sin consumir tanta memoria.
+
+**Ejemplo: Cargar datos desde PostgreSQL a Dask**
+
+``` python
+import dask.dataframe as dd  
+
+df = dd.read_sql("SELECT * FROM mi_tabla", engine) 
+
+print(df.head())
+```
+
+📌 **Ventaja:**\
+✅ Procesa datos en paralelo.\
+✅ Maneja datasets más grandes que la memoria RAM.
+
+#### Comparación de Métodos para Tablas Grandes
+
+| **Método** | **Uso Ideal** | **Ventaja Principal** |
+|------------------------|------------------------|------------------------|
+| Pandas (`pd.read_sql`) | Tablas pequeñas (\<500MB) | Fácil de usar |
+| `chunksize` en Pandas | 500MB - 2GB | Evita cargar todo en memoria |
+| `PyArrow` | Tablas grandes en memoria | Optimizado para procesamiento en columna |
+| `Dask` | Dataset \> 2GB | Escalabilidad y procesamiento paralelo |
+
+### Conclusión
+
+✔️ **Para bases de datos pequeñas**, usa `psycopg2` + `Pandas`.\
+✔️ **Para datos grandes**, usa `chunksize`, `PyArrow` o `Dask`.\
+✔️ **Si necesitas rendimiento extremo**, usa `Dask` o integra con `Spark`.
+
+## Anexo 2 - Acceso remoto a PostgreSQL
+
+### Autenticación
+
+PostgreSQL, en la configuración por defecto en Ubuntu, utiliza el método de autenticación "peer" para conexiones locales. Con "peer", el sistema compara el nombre del usuario de Linux con el usuario de PostgreSQL. Si intentas conectarte como otro usuario pero tu sesión de terminal se inició con otro usuario (por ejemplo, "postgres" o "root"), la autenticación falla.
+
+**Cambiar el método de autenticación en pg_hba.conf a "md5"**
+
+Con esto, PostgreSQL usará autenticación por contraseña en lugar de comparar el nombre del usuario del sistema.
+
+1.  **Editar el archivo de configuración:**\
+    Abre el archivo `/etc/postgresql/16/main/pg_hba.conf` (la ruta puede variar según la versión).
+
+    ``` bash
+    sudo nano /etc/postgresql/16/main/pg_hba.conf 
+    ```
+
+2.  **Modificar las líneas locales:**\
+    Busca las líneas que dicen algo como:
+
+    ``` sql
+    local   all             all                                     peer
+    ```
+
+    y cámbialas por:
+
+    ``` sql
+    local   all             all                                     md5
+    ```
+
+3.  **Reiniciar el servicio de PostgreSQL:**
+
+    ``` bash
+    sudo systemctl restart postgresql
+    ```
+
+4.  **Probar la conexión:**\
+    Ahora, al usar `psql -U <usuario> -d mi_base_de_datos -W`, se te pedirá la contraseña y deberías poder conectarte correctamente.
+
+### Conexión remota mediante pgAdmin
+
+Si al intentar conectarse remotamente con pgAdmin da un error de conexión, generalmente significa que el servidor de PostgreSQL no está escuchando en la dirección IP que intentas usar o que el puerto 5432 está bloqueado.
+
+1.  **Permitir conexiones externas en `postgresql.conf`**
+
+**Editar el archivo `postgresql.conf`**\
+Ubicado normalmente en `/etc/postgresql/<versión>/main/postgresql.conf`. Por ejemplo:
+
+```bash
+sudo nano /etc/postgresql/16/main/postgresql.conf
+```
+
+
+**Cambiar `listen_addresses`**\
+Busca la línea que contiene `listen_addresses` y asegúrate de que no esté comentada (`#`) y que permita escuchar en todas las interfaces (o en la IP específica que quieras). Por ejemplo:
+
+```conf
+listen_addresses = '*'
+```
+
+Si prefieres que solo escuche en la IP local (por seguridad), podrías poner:
+
+```conf
+listen_addresses = 'localhost,192.168.1.26'
+```
+
+2.  **Configurar el archivo `pg_hba.conf` para aceptar conexiones**
+
+**Editar el archivo `pg_hba.conf`**\
+Ubicado normalmente en `/etc/postgresql/<versión>/main/pg_hba.conf`. Por ejemplo:
+
+```bash
+sudo nano /etc/postgresql/16/main/pg_hba.conf
+```
+
+**Agregar una línea para permitir conexiones desde tu red local**\
+Por ejemplo, si la red es `192.168.1.0/24`, añade:
+
+```conf
+host    all    all    192.168.1.0/24    md5
+```
+
+Esto indica que cualquier equipo de la subred `192.168.1.x` puede conectarse a cualquier base de datos con cualquier usuario, usando autenticación MD5 (por contraseña).
+
+3.  **Reiniciar PostgreSQL**
+
+Después de hacer estos cambios, reinicia PostgreSQL para que tome la nueva configuración:
+
+```bash
+sudo systemctl restart postgresql
+```
+
+4.  **Verificar firewall (opcional)**
+
+Si tienes un firewall (por ejemplo, UFW en Ubuntu) podrías necesitar abrir el puerto 5432. Por ejemplo:
+
+```bash
+sudo ufw allow 5432/tcp
+```
+
+(Verifica si realmente lo necesitas y considera la seguridad de tu red.)
+
+5.  **Conectarte desde pgAdmin**
+
+-   **Host**: la IP o el nombre del host donde corre PostgreSQL (por ejemplo, `192.168.1.26` o `<nombre_host`).
+
+-   **Port**: `5432` (por defecto).
+
+-   **Username**: el nombre del usuario que creaste (por ejemplo, `"the-user"` si lo creaste con comillas dobles o sin comillas si usaste un guion bajo).
+
+-   **Password**: la contraseña que configuraste.
+
+**Resumen**
+
+1.  Configura `listen_addresses` en `postgresql.conf`.
+
+2.  Ajusta `pg_hba.conf` para permitir conexiones desde tu red local.
+
+3.  Reinicia PostgreSQL.
+
+4.  Revisa el firewall si es necesario.
+
+5.  Intenta conectarte con pgAdmin usando la IP y las credenciales adecuadas.
+
+## Anexo 3 - Instalación y Uso de MinIO en Linux
+
+MinIO es una alternativa **en local** a Amazon S3, que permite almacenar archivos en un **Data Lake** y acceder a ellos mediante una API compatible con S3. Es ideal para trabajar con **Parquet, JSON, CSV** y otros formatos en entornos de Big Data.
+
+### Instalación
+
+#### 📌 Método 1: Instalar y Ejecutar MinIO Manualmente
+
+Ejecuta los siguientes comandos en tu terminal:
+
+``` bash
+# Descargar MinIO 
+wget https://dl.min.io/server/minio/release/linux-amd64/minio -O minio 
+chmod +x minio  # Hacer el archivo ejecutable
+```
+
+Ahora inicia MinIO con almacenamiento en la carpeta `~/minio_data`:
+
+``` bash
+mkdir -p ~/minio_data ./minio server ~/minio_data --console-address ":9001"
+```
+
+Esto inicia el servicio en:
+
+-   **Puerto 9000** (API de MinIO, compatible con S3).
+
+-   **Puerto 9001** (Interfaz web de administración).
+
+💡 **Accede a la interfaz web:**\
+Abre http://localhost:9001 en tu navegador.\
+Usuario y contraseña por defecto:
+
+``` vbnet
+Access Key: minioadmin 
+Secret Key: minioadmin
+```
+
+#### 📌 Método 2: Instalar MinIO como Servicio en el Sistema
+
+Si quieres que MinIO se ejecute automáticamente al iniciar tu sistema, usa `systemd`:
+
+1️⃣ **Crea un usuario para MinIO (opcional, pero recomendado):**
+
+``` bash
+sudo useradd -r minio-user -s /sbin/nologin
+```
+
+2️⃣ **Crea la carpeta de datos:**
+
+``` bash
+sudo mkdir -p /mnt/minio sudo chown minio-user:minio-user /mnt/minio
+```
+
+3️⃣ **Descarga e instala MinIO:**
+
+``` bash
+wget https://dl.min.io/server/minio/release/linux-amd64/minio -O /usr/local/bin/minio 
+chmod +x /usr/local/bin/minio 
+sudo chown minio-user:minio-user /usr/local/bin/minio
+```
+
+4️⃣ **Crea un archivo de configuración para `systemd`:**
+
+``` bash
+sudo nano /etc/systemd/system/minio.service
+```
+
+📌 **Añade lo siguiente:**
+
+``` ini
+[Unit] 
+Description=MinIO Storage Service 
+After=network.target  
+
+[Service] 
+User=minio-user 
+Group=minio-user 
+ExecStart=/usr/local/bin/minio server /mnt/minio --console-address ":9001" Restart=always  
+
+[Install] 
+WantedBy=multi-user.target
+```
+
+Guarda y sal de Nano (`CTRL+X`, `Y`, `Enter`).
+
+5️⃣ **Inicia y habilita el servicio:**
+
+``` bash
+sudo systemctl daemon-reload sudo systemctl start minio sudo systemctl enable minio
+```
+
+📌 **Verifica el estado:**
+
+``` bash
+sudo systemctl status minio
+```
+
+### Uso
+
+#### Creación y Gestión de Buckets en MinIO
+
+En MinIO, los datos se organizan en **buckets** (equivalentes a carpetas en S3).
+
+##### 📌 Crear un Bucket desde la Interfaz Web
+
+1.  Ve a http://localhost:9001.
+
+2.  Inicia sesión (`minioadmin / minioadmin`).
+
+3.  En "Buckets", haz clic en "Create Bucket".
+
+4.  Introduce un nombre (ejemplo: `mis-datos`) y haz clic en "Create".
+
+##### 📌 Crear un Bucket desde la Terminal (`mc`)
+
+`mc` (MinIO Client) es una herramienta de línea de comandos para gestionar MinIO.
+
+1️⃣ **Descargar e instalar `mc`**
+
+``` bash
+wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc 
+chmod +x mc sudo mv mc /usr/local/bin/
+```
+
+2️⃣ **Configurar conexión a MinIO:**
+
+``` bash
+mc alias set local http://localhost:9000 minioadmin minioadmin
+```
+
+3️⃣ **Crear un Bucket:**
+
+``` bash
+mc mb local/mis-datos
+```
+
+4️⃣ **Listar Buckets disponibles:**
+
+``` bash
+mc ls local
+```
+
+#### Subir, Descargar y Listar Archivos en MinIO
+
+##### 📌 Subir archivos a MinIO
+
+Subir un archivo CSV al bucket `mis-datos`:
+
+``` bash
+mc cp datos.csv local/mis-datos/
+```
+
+Subir una carpeta completa:
+
+``` bash
+mc cp -r mi_carpeta/ local/mis-datos/
+```
+
+##### 📌 Listar archivos en un bucket
+
+``` bash
+mc ls local/mis-datos/
+```
+
+##### 📌 Descargar archivos desde MinIO
+
+``` bash
+mc cp local/mis-datos/datos.csv .
+```
+
+#### Acceder a MinIO desde Python (`boto3`)
+
+Para interactuar con MinIO desde Python, usamos `boto3`, la librería oficial de Amazon S3.
+
+1️⃣ **Instalar `boto3`:**
+
+``` bash
+pip install boto3
+```
+
+2️⃣ **Conectar a MinIO en local:**
+
+``` python
+import boto3  
+
+# Configuración de conexión 
+s3_client = boto3.client(     
+    "s3",     
+    endpoint_url="http://localhost:9000",     
+    aws_access_key_id="minioadmin",     
+    aws_secret_access_key="minioadmin" 
+    ) 
+
+# Listar Buckets 
+buckets = s3_client.list_buckets() 
+print("Buckets:", [b["Name"] for b in buckets["Buckets"]])
+```
+
+##### 📌 Subir archivos desde Python a MinIO
+
+``` python
+s3_client.upload_file("datos.csv", "mis-datos", "datos.csv") 
+print("Archivo subido con éxito!")
+```
+
+##### 📌 Descargar archivos desde MinIO a Python
+
+``` python
+s3_client.download_file("mis-datos", "datos.csv", "datos_descargados.csv") 
+print("Archivo descargado con éxito!")
+```
+
+#### Trabajar con Archivos Parquet en MinIO
+
+Podemos almacenar y leer archivos Parquet directamente desde MinIO.
+
+##### 📌 Guardar DataFrame en MinIO como Parquet
+
+``` python
+import pandas as pd 
+import pyarrow.parquet as pq 
+import pyarrow as pa  
+
+df = pd.DataFrame({"col1": [1, 2, 3], "col2": ["A", "B", "C"]})  
+
+# Guardar como Parquet 
+table = pa.Table.from_pandas(df) 
+pq.write_table(table, "datos.parquet")  
+
+# Subir a MinIO 
+s3_client.upload_file("datos.parquet", "mis-datos", "datos.parquet") 
+
+print("Parquet subido!")
+```
+
+##### 📌 Leer un Parquet desde MinIO
+
+``` python
+import s3fs  
+
+# Conectar MinIO con s3fs 
+
+fs = s3fs.S3FileSystem(client_kwargs={"endpoint_url": "http://localhost:9000"})  
+
+# Leer el archivo directamente 
+df = pd.read_parquet("s3://mis-datos/datos.parquet", storage_options={"key": "minioadmin", "secret": "minioadmin"}) 
+
+print(df)
+```
+
+### Conclusión
+
+✔️ Instalaste MinIO en Linux y lo configuraste.\
+✔️ Creaste y gestionaste buckets desde la terminal y la web.\
+✔️ Interactuaste con MinIO desde Python usando `boto3`.\
+✔️ Trabajaste con archivos Parquet y Pandas sobre MinIO.
+
+📌 **Siguientes pasos:**\
+🔹 ¿Quieres integrarlo con Spark o Dask?\
+🔹 ¿Necesitas autenticación avanzada con IAM en MinIO?
